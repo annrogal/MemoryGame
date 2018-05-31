@@ -24,3 +24,7 @@ function setGameTimer(){
         timer.innerHTML = `${minutes}:${seconds}`;
     }, 1000);
 }
+
+function resetTimer(){
+    
+}
