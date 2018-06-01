@@ -1,3 +1,38 @@
+const timer = document.getElementById('timer');
+let seconds = 0;
+let minutes = 0;
+let time;
+
+
+window.addEventListener("load", function(){
+    setGameTimer();
+    resetGameTimer();
+});
+
+
+function setGameTimer(){
+    timer.innerHTML = "0 mins 0 sec";
+    time = setInterval(() => {
+        seconds++;
+        
+        if(seconds === 60){
+            minutes++;
+            seconds = 0;
+        } 
+
+        timer.innerHTML = `${minutes} mins ${seconds} sec`;
+    }, 1000);
+}
+
+function resetGameTimer(){
+    document.getElementsByClassName("restart")[0].addEventListener("click", () => {
+        clearInterval(time);
+        seconds = 0;
+        minutes = 0;
+        setGameTimer();
+    })    
+}
+
 /*
  * Create a list that holds all of your cards
  */
