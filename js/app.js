@@ -11,18 +11,18 @@ window.addEventListener("load", function(){
 
 
 function setGameTimer(){
-    timer.innerHTML = "00:00";
+    timer.innerHTML = "0 mins 0 sec";
     time = setInterval(() => {
         seconds++;
-        seconds < 10 ? seconds = "0" + seconds : seconds;
-
+        
         if(seconds === 60){
             minutes++;
-            minutes < 10 ? minutes = "0" + minutes : minutes;
             seconds = 0;
         } 
 
-        timer.innerHTML = `${minutes}:${seconds}`;
+        ///minutes < 10 ? minutes = "0" + minutes : minutes;
+
+        timer.innerHTML = `${minutes} mins ${seconds} sec`;
     }, 1000);
 }
 
