@@ -20,15 +20,12 @@ function setGameTimer(){
             seconds = 0;
         } 
 
-        ///minutes < 10 ? minutes = "0" + minutes : minutes;
-
         timer.innerHTML = `${minutes} mins ${seconds} sec`;
     }, 1000);
 }
 
 function resetGameTimer(){
     document.getElementsByClassName("restart")[0].addEventListener("click", () => {
-        console.log("test");
         clearInterval(time);
         seconds = 0;
         minutes = 0;
