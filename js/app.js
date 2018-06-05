@@ -3,15 +3,54 @@ let seconds = 0;
 let minutes = 0;
 let time;
 
+
 const cards = document.getElementsByClassName("card");
+const shuffledCards = shuffle([...cards]);
+const deck = document.querySelector(".deck");
+
+let movesCounter = document.querySelector(".moves");
+let moves = 0;
+
+const openCards = document.getElementsByClassName("open");
+
 
 
 window.addEventListener("load", function(){
-    setGameTimer();
-    resetGameTimer();
+    movesCounter.innerHTML = moves;
     displayCards();
+    setGameTimer();
+    resetGame();
+    [...shuffledCards].map(e => {
+        e.addEventListener("click", function(e){
+            if(openCards.length < 2){
+                this.classList.toggle("open");
+                this.classList.toggle("show");
+                checkCards(e);
+            }            
+        })       
+    });
 });
 
+function checkCards(evt) {
+    if(openCards.length === 2){
+        moves++;
+        movesCounter.innerHTML = moves;
+        if(openCards[0].innerHTML === openCards[1].innerHTML){
+            [...openCards].map(e => {
+                e.classList.remove("open", "show")
+                e.classList.add("match");
+                openCards.length = 0;
+                console.log(openCards);
+            });
+        }else{
+            [...openCards].map(e => {
+                e.classList.remove("open", "show");
+            
+            });
+        }
+        
+    }
+}
 
 function setGameTimer(){
     timer.innerHTML = "0 mins 0 sec";
@@ -27,12 +66,13 @@ function setGameTimer(){
     }, 1000);
 }
 
-function resetGameTimer(){
-    document.getElementsByClassName("restart")[0].addEventListener("click", () => {
+function resetGame(){
+    document.querySelector(".restart").addEventListener("click", () => {
         clearInterval(time);
         seconds = 0;
         minutes = 0;
         setGameTimer();
+        displayCards();
     })    
 }
 
@@ -51,14 +91,15 @@ function shuffle(array) {
 }
 
 function displayCards() {
-    const shuffledCards = shuffle([...cards]);
-    const deck = document.getElementsByClassName("deck")[0];
     deck.innerHTML = "";
-    [...shuffledCards].map((e) => {
-        console.log(e);
-        e.classList.remove("show", "open", "match", "disabled");
+    [...shuffledCards].map(e => {
+        e.classList.remove("show", "open", "match");
         deck.appendChild(e);       
     });
+}
+
+function countMoves(){
+
 }
 
 
