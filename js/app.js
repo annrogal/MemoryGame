@@ -13,25 +13,43 @@ let moves = 0;
 
 const openCards = document.getElementsByClassName("open");
 
+const stars = document.querySelectorAll(".fa-star");
+
 
 
 window.addEventListener("load", function(){
-    movesCounter.innerHTML = moves;
-    displayCards();
+    initGame();
+});
+
+function initGame(){
+    deck.innerHTML = "";
+    shuffleCards();
+    checkCards();
     setGameTimer();
     resetGame();
+}
+
+function shuffleCards() {
+    movesCounter.innerHTML = moves;
     [...shuffledCards].map(e => {
-        e.addEventListener("click", function(e){
+        e.classList.remove("show", "open", "match");
+        deck.appendChild(e);       
+    });
+}
+
+function checkCards(){
+    [...shuffledCards].map(card => {
+        card.addEventListener("click", function(e){
             if(openCards.length < 2){
                 this.classList.toggle("open");
                 this.classList.toggle("show");
-                checkCards(e);
+                checkMatch(e);
             }            
         })       
     });
-});
+}
 
-function checkCards(evt) {
+function checkMatch(evt) {
     if(openCards.length === 2){
         moves++;
         movesCounter.innerHTML = moves;
@@ -39,17 +57,17 @@ function checkCards(evt) {
             [...openCards].map(e => {
                 e.classList.remove("open", "show")
                 e.classList.add("match");
-                openCards.length = 0;
-                console.log(openCards);
-            });
-        }else{
-            [...openCards].map(e => {
-                e.classList.remove("open", "show");
             
             });
+        }else{
+            setTimeout(() => [...openCards].map(e => {
+                e.classList.remove("open", "show");      
+            }), 1000);            
         }
         
     }
+
+    countMoves(moves);
 }
 
 function setGameTimer(){
@@ -68,16 +86,16 @@ function setGameTimer(){
 
 function resetGame(){
     document.querySelector(".restart").addEventListener("click", () => {
+        moves = 0;
+        shuffleCards();
         clearInterval(time);
-        seconds = 0;
-        minutes = 0;
         setGameTimer();
-        displayCards();
+        
     })    
 }
 
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -90,16 +108,12 @@ function shuffle(array) {
     return array;
 }
 
-function displayCards() {
-    deck.innerHTML = "";
-    [...shuffledCards].map(e => {
-        e.classList.remove("show", "open", "match");
-        deck.appendChild(e);       
-    });
-}
-
-function countMoves(){
-
+function countMoves(moves){
+   if(moves === 10){
+    stars[2].style.display = "none";
+   }else if(moves === 15){
+    stars[1].style.display = "none";
+   }
 }
 
 
