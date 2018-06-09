@@ -7,6 +7,9 @@ let time;
 const cards = document.getElementsByClassName("card");
 const shuffledCards = shuffle([...cards]);
 const deck = document.querySelector(".deck");
+const resultTimer = document.querySelector(".result-time");
+const winInfo = document.querySelector(".win-info");
+const starsList = document.querySelector(".stars");
 
 let movesCounter = document.querySelector(".moves");
 let moves = 0;
@@ -14,6 +17,8 @@ let moves = 0;
 const openCards = document.getElementsByClassName("open");
 
 const stars = document.querySelectorAll(".fa-star");
+
+let matchedCards = 0;
 
 
 
@@ -26,7 +31,9 @@ function initGame(){
     shuffleCards();
     checkCards();
     setGameTimer();
-    resetGame();
+    document.querySelector(".restart").addEventListener("click", () => { 
+        resetGame();
+    })  
 }
 
 function shuffleCards() {
@@ -38,8 +45,22 @@ function shuffleCards() {
 }
 
 function checkCards(){
+    console.log("test");
     [...shuffledCards].map(card => {
         card.addEventListener("click", function(e){
+            e.preventDefault()
+            if(openCards.length < 2){
+                this.classList.toggle("open");
+                this.classList.toggle("show");
+                checkMatch(e);
+            }            
+        })       
+    });
+}
+
+function uncheckedCards(){
+    [...shuffledCards].map(card => {
+        card.removeEventListener("click", function(e){
             if(openCards.length < 2){
                 this.classList.toggle("open");
                 this.classList.toggle("show");
@@ -57,8 +78,8 @@ function checkMatch(evt) {
             [...openCards].map(e => {
                 e.classList.remove("open", "show")
                 e.classList.add("match");
-            
             });
+            checkResult();
         }else{
             setTimeout(() => [...openCards].map(e => {
                 e.classList.remove("open", "show");      
@@ -66,11 +87,29 @@ function checkMatch(evt) {
         }
         
     }
-
     countMoves(moves);
 }
 
+function checkResult(){
+    matchedCards += 1;
+
+    if(matchedCards === 8){        
+        winInfo.style.display = "block";
+        resultTimer.innerHTML = `${minutes} min ${seconds} sec`; 
+   
+        document.querySelector(".body").appendChild(starsList.cloneNode(true));        
+
+        document.querySelector("button").addEventListener("click", function(){
+            resetGame();
+            winInfo.style.display = "none";
+            
+        })
+    }
+}
+
 function setGameTimer(){
+    seconds = 0;
+    minutes = 0;
     timer.innerHTML = "0 mins 0 sec";
     time = setInterval(() => {
         seconds++;
@@ -85,13 +124,13 @@ function setGameTimer(){
 }
 
 function resetGame(){
-    document.querySelector(".restart").addEventListener("click", () => {
+        uncheckedCards()
         moves = 0;
         shuffleCards();
         clearInterval(time);
-        setGameTimer();
-        
-    })    
+        setGameTimer(); 
+        stars[1].style.display = ""; 
+        stars[2].style.display = "";
 }
 
 function shuffle(array) {
@@ -115,6 +154,8 @@ function countMoves(moves){
     stars[1].style.display = "none";
    }
 }
+
+
 
 
 /*
