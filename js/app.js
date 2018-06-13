@@ -2,13 +2,12 @@ const timer = document.getElementById('timer');
 let seconds = 0;
 let minutes = 0;
 let time;
+let scores = 3;
 
 
 const cards = document.getElementsByClassName("card");
 const shuffledCards = shuffle([...cards]);
 const deck = document.querySelector(".deck");
-const resultTimer = document.querySelector(".result-time");
-const winInfo = document.querySelector(".win-info");
 const starsList = document.querySelector(".stars");
 
 let movesCounter = document.querySelector(".moves");
@@ -45,7 +44,6 @@ function shuffleCards() {
 }
 
 function checkCards(){
-    console.log("test");
     [...shuffledCards].map(card => {
         card.addEventListener("click", function(e){
             e.preventDefault()
@@ -93,16 +91,17 @@ function checkMatch(evt) {
 function checkResult(){
     matchedCards += 1;
 
-    if(matchedCards === 8){        
-        winInfo.style.display = "block";
-        resultTimer.innerHTML = `${minutes} min ${seconds} sec`; 
-   
-        document.querySelector(".body").appendChild(starsList.cloneNode(true));        
-
-        document.querySelector("button").addEventListener("click", function(){
-            resetGame();
-            winInfo.style.display = "none";
-            
+    if(matchedCards === 8){   
+        console.log(scores);
+        swal({
+            title: "Congratulations !!!",
+            text: `You won with time: ${minutes} min ${seconds} sec \nand ${scores} scores!`,
+            type: "success",
+            confirmButtonText: "Play again!"
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+               resetGame();
+            }     
         })
     }
 }
@@ -124,6 +123,7 @@ function setGameTimer(){
 }
 
 function resetGame(){
+    cosnole.log("reset");
         uncheckedCards()
         moves = 0;
         shuffleCards();
@@ -148,23 +148,12 @@ function shuffle(array) {
 }
 
 function countMoves(moves){
-   if(moves === 10){
-    stars[2].style.display = "none";
-   }else if(moves === 15){
-    stars[1].style.display = "none";
-   }
+    if(moves === 10){
+        scores = 2;
+        stars[2].style.display = "none";
+    }else if(moves === 15){
+        scores = 1;
+        stars[1].style.display = "none";
+    }
 }
 
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */

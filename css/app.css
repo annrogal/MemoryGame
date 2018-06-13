@@ -111,11 +111,3 @@ h1 {
 .disable {
     display: none;
 }
-
-/* 
- * Style for the win panel
- */
-
- .win-info {
-     display: none;
- }
