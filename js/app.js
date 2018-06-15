@@ -6,7 +6,7 @@ let scores = 3;
 
 
 const cards = document.getElementsByClassName("card");
-const shuffledCards = shuffle([...cards]);
+let shuffledCards = [...cards];
 const deck = document.querySelector(".deck");
 const starsList = document.querySelector(".stars");
 
@@ -26,52 +26,51 @@ window.addEventListener("load", function(){
 });
 
 function initGame(){
-    deck.innerHTML = "";
+    shuffledCards = shuffle([...cards]);
+   
     shuffleCards();
-    checkCards();
+    clearInterval(time);
+    moves = 0;
+    movesCounter.innerHTML = "0";
+    
+
+    [1,2].map(e => {stars[e].style.display = ""})
     setGameTimer();
-    document.querySelector(".restart").addEventListener("click", () => { 
-        resetGame();
-    })  
+    matchedCards = 0;
+     
 }
 
+document.querySelector(".restart").addEventListener("click", () => { 
+    initGame();
+})
+
 function shuffleCards() {
+    deck.innerHTML = "";
     movesCounter.innerHTML = moves;
-    [...shuffledCards].map(e => {
+    [...shuffledCards].map(e => {        
         e.classList.remove("show", "open", "match");
         deck.appendChild(e);       
     });
 }
 
 function checkCards(){
-    [...shuffledCards].map(card => {
-        card.addEventListener("click", function(e){
-            e.preventDefault()
+    [...shuffledCards].map(card => {       
+         card.addEventListener("click", function(e){
+                    
             if(openCards.length < 2){
                 this.classList.toggle("open");
                 this.classList.toggle("show");
-                checkMatch(e);
             }            
+            checkMatch();
         })       
     });
 }
 
-function uncheckedCards(){
-    [...shuffledCards].map(card => {
-        card.removeEventListener("click", function(e){
-            if(openCards.length < 2){
-                this.classList.toggle("open");
-                this.classList.toggle("show");
-                checkMatch(e);
-            }            
-        })       
-    });
-}
-
-function checkMatch(evt) {
+function checkMatch() {
     if(openCards.length === 2){
         moves++;
         movesCounter.innerHTML = moves;
+        console.log(openCards[0], openCards[1]);
         if(openCards[0].innerHTML === openCards[1].innerHTML){
             [...openCards].map(e => {
                 e.classList.remove("open", "show")
@@ -91,8 +90,7 @@ function checkMatch(evt) {
 function checkResult(){
     matchedCards += 1;
 
-    if(matchedCards === 8){   
-        console.log(scores);
+    if(matchedCards === 1){   
         swal({
             title: "Congratulations !!!",
             text: `You won with time: ${minutes} min ${seconds} sec \nand ${scores} scores!`,
@@ -100,7 +98,7 @@ function checkResult(){
             confirmButtonText: "Play again!"
         }).then(function(isConfirm) {
             if (isConfirm) {
-               resetGame();
+               initGame();
             }     
         })
     }
@@ -122,16 +120,6 @@ function setGameTimer(){
     }, 1000);
 }
 
-function resetGame(){
-    cosnole.log("reset");
-        uncheckedCards()
-        moves = 0;
-        shuffleCards();
-        clearInterval(time);
-        setGameTimer(); 
-        stars[1].style.display = ""; 
-        stars[2].style.display = "";
-}
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -156,4 +144,7 @@ function countMoves(moves){
         stars[1].style.display = "none";
     }
 }
+
+
+checkCards();
 
