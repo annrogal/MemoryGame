@@ -145,7 +145,7 @@ function checkMatch() {
 function checkResult(){
     matchedCards += 1;
 
-    if(matchedCards === 1){  
+    if(matchedCards === 8){  
         clearInterval(time); 
         swal({
             title: "Congratulations !!!",
