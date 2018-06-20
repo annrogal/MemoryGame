@@ -134,7 +134,7 @@ function checkMatch() {
             checkResult();
         }else{
             setTimeout(() => [...openCards].map(e => {
-                e.classList.remove("open", "show");      
+                e.classList.remove("open", "show", "disabled");      
             }), 1000);            
         }
         
