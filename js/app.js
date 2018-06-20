@@ -145,11 +145,11 @@ function checkMatch() {
 function checkResult(){
     matchedCards += 1;
 
-    if(matchedCards === 8){  
+    if(matchedCards === 1){  
         clearInterval(time); 
         swal({
             title: "Congratulations !!!",
-            text: `You won with time: ${minutes} min ${seconds} sec \nand ${scores} scores (${moves} moves)`,
+            text: sessionStorage.getItem("moves") === null ? `You won with time: ${minutes} min ${seconds} sec \nand ${scores} scores (${moves} moves)` : `You won with time: ${minutes} min ${seconds} sec \nand ${scores} scores (${moves} moves)! \n Last time you had ${sessionStorage.getItem("moves")} moves`,
             type: "success",
             confirmButtonText: "Play again!"
         }).then(function(isConfirm) {
@@ -157,6 +157,8 @@ function checkResult(){
                initGame();
             }     
         })
+
+        sessionStorage.setItem("moves", moves);
     }
 }
 

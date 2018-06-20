@@ -79,7 +79,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
-    animation-name: example;
+    animation-name: match;
     animation-duration: 1s;
 }
 
@@ -116,7 +116,7 @@ h1 {
 }
 
 /*media queries*/
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 475px) {
     .deck {
         width: 300px;
         height: 300px;
@@ -126,10 +126,14 @@ h1 {
         width: 50px;
         height: 50px;
     }
+
+    .score-panel {
+        width: 270px;
+    }
 }
 
 
-@media screen and (min-width: 381px) and (max-width: 650px) {
+@media screen and (min-width: 476px) and (max-width: 685px) {
     .deck {
         width: 450px;
         height: 450px;
@@ -141,10 +145,16 @@ h1 {
     }
 }
 
-@keyframes example {
+@keyframes match {
     0%   {background-color:red;}
     25%  {background-color:yellow; }
     50%  {background-color:blue;}
     75%  {background-color:green;}
     100% {background-color:red;}
+
+    from { 
+        transform: rotate(0deg); 
+    } to { 
+        transform: rotate(360deg); 
+    }
 }
