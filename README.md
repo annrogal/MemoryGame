@@ -1,20 +1,16 @@
 # Memory Game Project
+This is a simple memory game with 16 cards, timer and scores counting.
+Enjoy!
 
-## Table of Contents
+## How Play Game
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+To start the game, visit the website - https://annrogal.github.io/MemoryGame/ .
+After the first click on the card, the time will start counting down.
 
-## Instructions
+App counting your moves and gives you a score.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The game is end when all 8 matches have been found.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Source
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This repository was started by Udacity contibuting - https://github.com/udacity/fend-project-memory-game

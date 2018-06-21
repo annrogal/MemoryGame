@@ -3,6 +3,7 @@ const timer = document.getElementById('timer');
 let seconds = 0;
 let minutes = 0;
 let time;
+let timerStart;
 
 //variables describe set of cards
 const cards = document.getElementsByClassName("card");
@@ -63,8 +64,7 @@ function initGame(){
 
     //set timer
     timer.innerHTML = "0 mins 0 sec";
-    setGameTimer();
-     
+    timerStart = true;    
 }
 
 //function ro shuffle cards
@@ -110,7 +110,11 @@ function setGameTimer(){
 //function which add event listener CLICK to each card
 function checkCards(){
     [...shuffledCards].map(card => {       
-         card.addEventListener("click", function(e){                  
+         card.addEventListener("click", function(e){    
+             if(timerStart) {
+                setGameTimer();
+                timerStart = false;
+             }              
             if(openCards.length < 2){
                 this.classList.toggle("open");
                 this.classList.toggle("show");
