@@ -14,3 +14,9 @@ The game is end when all 8 matches have been found.
 ## Source
 
 This repository was started by Udacity contibuting - https://github.com/udacity/fend-project-memory-game
+
+## Dependencies
+For this project I've used external libraries: 
+* sweetalert2
+* fontawsome
+* Coda font from googleapis
